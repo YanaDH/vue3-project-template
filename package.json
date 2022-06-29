@@ -2,9 +2,6 @@
   "name": "{{ name }}",
   "version": "1.0.0",
   "private": true,
-  "bin": {
-    "vue3-project-template": "bin/index.js"
-  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
