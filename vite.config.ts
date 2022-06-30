@@ -1,16 +1,30 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'path'
+import eslintPlugin from 'vite-plugin-eslint'
 
 export default defineConfig(({ mode }) => {
   const { VITE_PUBLIC_PATH, VITE_PROXY_DOMAIN, VITE_PROXY_DOMAIN_REAL } = loadEnv(
     mode,
     process.cwd()
   )
-    
+  const domain = {
+    [VITE_PROXY_DOMAIN]: {
+      target: VITE_PROXY_DOMAIN_REAL,
+      // ws: true,
+      changeOrigin: true
+    }
+  }
+  const proxy = VITE_PROXY_DOMAIN_REAL.length > 0 ? domain : null
+
   return {
     base: VITE_PUBLIC_PATH, //打包路径
-    plugins: [vue()],
+    plugins: [
+      vue(),
+      eslintPlugin({
+        include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue']
+      })
+    ],
     // 配置别名
     resolve: {
       alias: {
@@ -30,16 +44,7 @@ export default defineConfig(({ mode }) => {
       port: 8000,
       open: true,
       https: false,
-      proxy:
-        VITE_PROXY_DOMAIN_REAL.length > 0
-          ? {
-              [VITE_PROXY_DOMAIN]: {
-                target: VITE_PROXY_DOMAIN_REAL,
-                // ws: true,
-                changeOrigin: true
-              }
-            }
-          : null
+      proxy
     },
     // 生产环境打包配置
     //去除 console debugger
