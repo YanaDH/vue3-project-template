@@ -19,9 +19,11 @@ module.exports = {
   },
   plugins: ['vue', '@typescript-eslint', 'prettier'],
   rules: {
-    // 关闭驼峰命名规则
-    'vue/multi-word-component-names': 0,
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'vue/multi-word-component-names': 0, // 关闭驼峰命名规则
+    '@typescript-eslint/no-explicit-any': 'off', // any
+    'no-else-return': 2, //如果if语句里面有return,后面不能跟else语句
+    eqeqeq: 2 //必须使用全等
   }
 }

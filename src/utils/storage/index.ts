@@ -1,3 +1,7 @@
+import config from '../../../config'
+
+const prefix = config.PROJECT_NAME
+
 interface ProxyStorage {
   getItem(key: string): any
   setItem(Key: string, value: string): void
@@ -15,22 +19,25 @@ class sessionStorageProxy implements ProxyStorage {
 
   // 存
   public setItem(key: string, value: any): void {
-    this.storage.setItem(key, JSON.stringify(value))
+    this.storage.setItem(`${prefix}-${key}`, JSON.stringify(value))
   }
 
   // 取
   public getItem(key: string): any {
-    return JSON.parse(this.storage.getItem(key))
+    return JSON.parse(this.storage.getItem(`${prefix}-${key}`))
   }
 
   // 删
   public removeItem(key: string): void {
-    this.storage.removeItem(key)
+    this.storage.removeItem(`${prefix}-${key}`)
   }
 
   // 清空
   public clear(): void {
-    this.storage.clear()
+    Object.keys(this.storage).forEach((key) => {
+      if (key.startsWith(prefix)) this.storage.removeItem(key)
+    })
+    // this.storage.clear()
   }
 }
 

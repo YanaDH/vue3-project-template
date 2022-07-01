@@ -25,7 +25,7 @@ const instance = axios.create({
 })
 
 // 添加请求拦截器
-instance.interceptors.request.use(config => {
+instance.interceptors.request.use((config) => {
   config.headers = config.headers || {}
   const token = userStore.token
   if (token) {
@@ -36,8 +36,8 @@ instance.interceptors.request.use(config => {
 
 // 添加响应拦截器
 instance.interceptors.response.use(
-  res => res,
-  err => {
+  (res) => res,
+  (err) => {
     const res = err.response
     const code: number = res.status
     if (res.config.dontShowToast) {

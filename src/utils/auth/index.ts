@@ -1,8 +1,10 @@
 import { userStoreHook } from '@/store/modules/user'
 import { UserInterface } from '@/types'
 import { storageLocal } from '@/utils/storage'
+import config from '../../../config'
 
 const userStore = userStoreHook()
+const prefix = config.PROJECT_NAME
 
 export function getUser(key: string) {
   const user = storageLocal.getItem('user') || {}
@@ -23,7 +25,7 @@ export function removeUser() {
 
 // 手动删除localstorage时清空userStore
 window.addEventListener('storage', function (e) {
-  if ((!e.key || e.key === 'user') && !e.newValue) {
+  if ((!e.key || e.key === `${prefix}-user`) && !e.newValue) {
     userStore.REMOVE_USER_INFO()
     window.location.reload()
   }
