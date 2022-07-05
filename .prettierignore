@@ -1,0 +1,7 @@
+dist
+node_modules
+public
+src/assets
+*.d.ts
+package.json
+pnpm-lock.yaml
