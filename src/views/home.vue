@@ -2,7 +2,5 @@
   <div>home</div>
 </template>
 
-<script setup lang="ts">
-import { ref } from 'vue'
-</script>
+<script setup lang="ts"></script>
 <style lang="scss" scoped></style>
